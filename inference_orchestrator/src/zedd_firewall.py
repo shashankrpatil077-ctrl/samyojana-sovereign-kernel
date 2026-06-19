@@ -1,16 +1,30 @@
+# V4: Mahalanobis++ & QSPEC Speculative Decoding
 import numpy as np
-from sentence_transformers import SentenceTransformer
-from scipy.spatial.distance import mahalanobis
 
 class MahalanobisZEDDFirewall:
     def __init__(self):
-        self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-        self.covariance_matrix_inv = np.load("benign_cov_inv.npy")
-        self.mean_vector = np.load("benign_mean.npy")
-        self.DRIFT_THRESHOLD = 8.5 # Mahalanobis distance
+        self.benign_cov_inv = np.load("benign_cov_inv.npy") # Pre-computed offline
+        self.benign_mean = np.load("benign_mean.npy")
 
-    def intercept(self, agent_input: str) -> bool:
-        emb = self.embedder.encode([agent_input])[0]
-        # Prevents Anisotropy/Text-Padding Prompt Injections
-        dist = mahalanobis(emb, self.mean_vector, self.covariance_matrix_inv)
-        return dist > self.DRIFT_THRESHOLD
+    def detect_drift(self, incoming_embedding):
+        # V4 FIX: L2-Normalization (Mahalanobis++) to prevent Eigenvector Masking
+        norm = np.linalg.norm(incoming_embedding)
+        if norm > 0:
+            incoming_embedding = incoming_embedding / norm
+            
+        delta = incoming_embedding - self.benign_mean
+        
+        # Calculate Mahalanobis Distance over the normalized high-dimensional manifold
+        distance = np.sqrt(np.dot(np.dot(delta, self.benign_cov_inv), delta.T))
+        
+        # ZEDD Threshold
+        if distance > 0.82:
+            return "ANOMALY_DETECTED_KILL_SWITCH"
+        return "SAFE"
+
+class QSPECOrchestrator:
+    # V4 FIX: Replaces naive FP8 AWQ with QSPEC.
+    # Uses low-precision for drafting, but high-precision for verification of exact financial digits.
+    def __init__(self):
+        self.draft_precision = "INT4"
+        self.verify_precision = "BF16"

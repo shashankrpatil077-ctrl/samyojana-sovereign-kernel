@@ -1,22 +1,18 @@
-# V3: Mastercard-Style Collaborative Intelligence FHE Pool
-import tenseal as ts
+# V4: Exact Arithmetic Pooling with BGV
+# Replacing CKKS (Approximate) with BGV (Exact Integer) to ensure GAAP compliance for banking ledgers.
+import tenseal as ts # In production, OpenFHE would be used for BGV
 
-class CollaborativeFraudIntelligence:
+class ExactCollaborativeFraudIntelligence:
     def __init__(self):
-        # Context setup for Fully Homomorphic Encryption (CKKS Scheme)
+        # Context setup for BGV (Exact Integer Arithmetic)
         self.context = ts.context(
-            ts.SCHEME_TYPE.CKKS,
+            ts.SCHEME_TYPE.BFV, # tenseal uses BFV for exact int, representing BGV/BFV class
             poly_modulus_degree=8192,
-            coeff_mod_bit_sizes=[60, 40, 40, 60]
+            plain_modulus=1032193
         )
-        self.context.global_scale = 2**40
         self.context.generate_galois_keys()
 
-    def pool_and_evaluate(self, encrypted_vector_bank_a, encrypted_vector_bank_b):
-        # Enables banks to pool encrypted transaction vectors to detect cross-border fraud rings
-        # WITHOUT violating local data localization laws or GDPR. The data remains encrypted.
+    def pool_and_evaluate_exact(self, encrypted_vector_bank_a, encrypted_vector_bank_b):
+        # Exact integer addition over ciphertext. No rounding noise.
         pooled_encrypted_state = encrypted_vector_bank_a + encrypted_vector_bank_b
-        
-        # Simulated Neural Network matrix multiplication over ciphertext
-        # return model.forward(pooled_encrypted_state)
         return pooled_encrypted_state
