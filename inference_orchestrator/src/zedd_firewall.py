@@ -1,15 +1,16 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from scipy.spatial.distance import mahalanobis
 
-class SemanticDriftFirewall:
+class MahalanobisZEDDFirewall:
     def __init__(self):
         self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-        self.safe_centroids = np.load("samyojana_safe_manifolds.npy")
-        self.DRIFT_THRESHOLD = 0.82
+        self.covariance_matrix_inv = np.load("benign_cov_inv.npy")
+        self.mean_vector = np.load("benign_mean.npy")
+        self.DRIFT_THRESHOLD = 8.5 # Mahalanobis distance
 
-    def intercept_and_validate(self, agent_input: str, agent_output: str) -> bool:
-        out_emb = self.embedder.encode([agent_output])[0]
-        distances = np.linalg.norm(self.safe_centroids - out_emb, axis=1)
-        if np.min(distances) > self.DRIFT_THRESHOLD:
-            return False
-        return True
+    def intercept(self, agent_input: str) -> bool:
+        emb = self.embedder.encode([agent_input])[0]
+        # Prevents Anisotropy/Text-Padding Prompt Injections
+        dist = mahalanobis(emb, self.mean_vector, self.covariance_matrix_inv)
+        return dist > self.DRIFT_THRESHOLD

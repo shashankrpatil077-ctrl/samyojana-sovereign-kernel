@@ -1,21 +1,28 @@
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::cell::UnsafeCell;
-use std::time::{SystemTime, UNIX_EPOCH};
 
-const BUFFER_SIZE: usize = 65536; // Strict power of 2 for bitwise masking
+const BUFFER_SIZE: usize = 65536;
 const INDEX_MASK: usize = BUFFER_SIZE - 1;
 
-#[repr(C, align(64))]
+#[repr(C, align(128))] // Upgraded from 64 to 128 for Zen 5 prefetchers
 struct CachePaddedSequence {
     value: AtomicUsize,
 }
 
-#[derive(Clone, Default)]
+#[derive(Clone)]
 pub struct TransactionEvent {
     pub sequence_id: u64,
-    pub timestamp_ns: u64,
     pub customer_token: [u8; 32],
-    pub encrypted_payload: [u8; 184], // Packed to exact 256 byte boundary
+    pub encrypted_payload: [u8; 184], // Zero heap allocation
+}
+impl Default for TransactionEvent {
+    fn default() -> Self {
+        Self {
+            sequence_id: 0,
+            customer_token: [0; 32],
+            encrypted_payload: [0; 184]
+        }
+    }
 }
 
 pub struct ZeroAllocationRingBuffer {
@@ -36,18 +43,5 @@ impl ZeroAllocationRingBuffer {
             producer_cursor: CachePaddedSequence { value: AtomicUsize::new(0) },
             consumer_cursor: CachePaddedSequence { value: AtomicUsize::new(0) },
         }
-    }
-
-    pub fn try_publish(&self, mut event: TransactionEvent) -> Result<(), &'static str> {
-        let current_prod = self.producer_cursor.value.load(Ordering::Relaxed);
-        let current_cons = self.consumer_cursor.value.load(Ordering::Acquire);
-        if current_prod.wrapping_sub(current_cons) >= BUFFER_SIZE {
-            return Err("BACKPRESSURE_THRESHOLD_EXCEEDED");
-        }
-        let slot_index = current_prod & INDEX_MASK;
-        event.sequence_id = current_prod as u64;
-        unsafe { *self.buffer[slot_index].get() = event; }
-        self.producer_cursor.value.store(current_prod.wrapping_add(1), Ordering::Release);
-        Ok(())
     }
 }
