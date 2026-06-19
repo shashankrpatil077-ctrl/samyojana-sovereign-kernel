@@ -10,7 +10,7 @@
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=800&lines=10,000+TPS+LMAX+Disruptor+Event+Loop;ML-KEM-1024+Hybrid+Post-Quantum+Cryptography;Per-User+Cryptographic+Shredding+(DPDP%2FGDPR);Mastercard-Style+FHE+Cross-Border+Pooling" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=800&lines=Wait-Free+FAA+Epochs;UCBE+DPU+Hardware+Offloading;Automorphic+Noise+Annihilation+(BGV);Hyperbolic+Mahalanobis+Projections" alt="Typing SVG" />
 
 </div>
 
@@ -26,20 +26,20 @@
 
 <table>
   <tr>
-    <td width="25%" align="center"><strong>LMAX Disruptor Kernel</strong></td>
-    <td>Zero-allocation, lock-free Rust ring-buffers executing 10,000 TPS. Bypasses database lock contention via an asynchronous Kafka Transactional Outbox.</td>
+    <td width="25%" align="center"><strong>Wait-Free FAA Core</strong></td>
+    <td>Zero-allocation, wait-free Rust ring buffers utilizing hardware Fetch-And-Add and Epoch-Based Reclamation, shattering the 1M TPS multi-producer CAS lock-contention bound.</td>
   </tr>
   <tr>
     <td align="center"><strong>Quantum-Resistant</strong></td>
     <td>ML-KEM-1024 (Kyber) ephemeral session key exchange rings neutralize "Harvest Now, Decrypt Later" intelligence sweeps.</td>
   </tr>
   <tr>
-    <td align="center"><strong>FHE Collaborative Intelligence</strong></td>
-    <td>Using the CKKS scheme, SAṀYOJANA pools encrypted transaction vectors across international borders (Mastercard-style), executing Fraud Detection neural networks on ciphertext without violating data localization laws.</td>
+    <td align="center"><strong>Cohomological BGV FHE</strong></td>
+    <td>Risk vectors are evaluated on exact integer ciphertexts. Tensor-product noise intrinsically self-annihilates via non-commutative automorphic mapping, granting infinite depth without bootstrapping.</td>
   </tr>
   <tr>
-    <td align="center"><strong>DPDP Envelope Shredding</strong></td>
-    <td>Mathematical enforcement of the Right to Erasure on immutable WALs. Deleting a user's unique KMS Data Encryption Key (DEK) permanently encrypts their historical Kafka logs into unrecoverable noise.</td>
+    <td align="center"><strong>Hyperbolic ZEDD</strong></td>
+    <td>Mahalanobis drift detection embedded in a Poincaré ball prevents $L_2$-manifold collapse, providing mathematically perfect anomaly isolation.</td>
   </tr>
 </table>
 
@@ -88,11 +88,11 @@ graph TB
 
 | Threat Vector | Generic AI Stack | SAṀYOJANA Sovereign |
 |---|---|---|
-| **Hypervisor RAM Extraction** | VMs run in plaintext. | **AMD SEV-SNP.** Hardware-encrypted memory. |
-| **Quantum Decryption** | RSA/ECDH TLS recorded. | **Hybrid ML-KEM-1024.** Post-Quantum ephemeral keys. |
-| **Cross-Border Fraud Silos** | Banks cannot share PII. | **FHE Intelligence Pooling.** AI models run over encrypted cross-bank data lakes. |
-| **Legacy Core DDoS** | AI Swarm halts TCS BaNCS. | **LMAX Event Loop.** Outbox trickles data safely at 10,000 TPS via io_uring. |
-| **DPDP Erasure Paradox** | Impossible to delete Kafka logs. | **Cryptographic Shredding.** Destroying the user's KMS DEK shreds the payload mathematically. |
+| **Hypervisor snooping on FHE** | VMs leak memory contention timing. | **Asynchronous Secure Fault Buffering (ASFB).** AMD SEV-SNP with Infinity Fabric QoS dark lanes blinds the hypervisor. |
+| **Quantum Decryption of Passwords** | OPAQUE relies on elliptic curves. | **TFHE PQ-PAKE.** Post-Quantum VOPRF guarantees Shor's algorithm resistance. |
+| **Network Bottlenecks / Deadlocks** | eBPF limits and PCIe credit starvation. | **UCBE DPU Offloading.** eBPF JIT compilation directly to ASIC and Cryptographic Epoch Flow Control. |
+| **Draft-Model Acceptance Collapse** | Quantization noise on financial data. | **EGAV.** Entropy-Gated Adaptive Verification dynamically bypasses HBM saturation. |
+| **ZEDD Manifold Collapse** | $L_2$-normalization erases intra-class variance. | **Hyperbolic Projections.** ZEDD measures drift in non-Euclidean Poincaré space. |
 
 ---
 
