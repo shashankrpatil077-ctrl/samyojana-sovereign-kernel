@@ -1,4 +1,0 @@
-{
-  "summary":  "Python script to completely restructure the SAṀYOJANA codebase with the bleeding-edge V2 architecture (AF_XDP, io_uring, Katran eBPF, OPAQUE VOPRF, Hybrid PQC, and Lock-Free Tracing).",
-  "updatedAt":  "2026-06-19T21:11:33.795959400Z"
-}
