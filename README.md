@@ -10,7 +10,7 @@
 
 <br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=800&lines=10,000+TPS+LMAX+Disruptor+Event+Loop;ML-KEM-1024+Post-Quantum+Cryptography;DPDP+Act+2023+Salt-Shredding+Erasure;FHE+CKKS+Encrypted+Risk+Computation" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=500&size=18&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=800&lines=10,000+TPS+LMAX+Disruptor+Event+Loop;ML-KEM-1024+Hybrid+Post-Quantum+Cryptography;Per-User+Cryptographic+Shredding+(DPDP%2FGDPR);Mastercard-Style+FHE+Cross-Border+Pooling" alt="Typing SVG" />
 
 </div>
 
@@ -34,12 +34,12 @@
     <td>ML-KEM-1024 (Kyber) ephemeral session key exchange rings neutralize "Harvest Now, Decrypt Later" intelligence sweeps.</td>
   </tr>
   <tr>
-    <td align="center"><strong>Homomorphic Privacy</strong></td>
-    <td>Credit risk vectors are evaluated directly on ciphertext using the CKKS FHE scheme. Plaintext financial data never touches runtime memory.</td>
+    <td align="center"><strong>FHE Collaborative Intelligence</strong></td>
+    <td>Using the CKKS scheme, SAṀYOJANA pools encrypted transaction vectors across international borders (Mastercard-style), executing Fraud Detection neural networks on ciphertext without violating data localization laws.</td>
   </tr>
   <tr>
-    <td align="center"><strong>DPDP Erasure</strong></td>
-    <td>Mathematical enforcement of the Right to Erasure via 256-bit Argon2id salt-shredding, rendering historical ciphertext irreversibly noisy.</td>
+    <td align="center"><strong>DPDP Envelope Shredding</strong></td>
+    <td>Mathematical enforcement of the Right to Erasure on immutable WALs. Deleting a user's unique KMS Data Encryption Key (DEK) permanently encrypts their historical Kafka logs into unrecoverable noise.</td>
   </tr>
 </table>
 
@@ -89,10 +89,10 @@ graph TB
 | Threat Vector | Generic AI Stack | SAṀYOJANA Sovereign |
 |---|---|---|
 | **Hypervisor RAM Extraction** | VMs run in plaintext. | **AMD SEV-SNP.** Hardware-encrypted memory. |
-| **Quantum Decryption** | RSA/ECDH TLS recorded. | **ML-KEM-1024.** Lattice-based ephemeral keys. |
-| **Indirect Prompt Injection** | Instructions bypass risk logic. | **ZEDD Firewall.** Latent space drift > 0.82 triggers kill-switch. |
-| **Legacy Core DDoS** | AI Swarm halts TCS BaNCS. | **LMAX Event Loop.** Outbox trickles data at 500 TPS safely. |
-| **DPDP Erasure Impossibility** | PII entangled in relational data. | **Salt Shredding.** Destroying salt renders DB ciphertext unreadable. |
+| **Quantum Decryption** | RSA/ECDH TLS recorded. | **Hybrid ML-KEM-1024.** Post-Quantum ephemeral keys. |
+| **Cross-Border Fraud Silos** | Banks cannot share PII. | **FHE Intelligence Pooling.** AI models run over encrypted cross-bank data lakes. |
+| **Legacy Core DDoS** | AI Swarm halts TCS BaNCS. | **LMAX Event Loop.** Outbox trickles data safely at 10,000 TPS via io_uring. |
+| **DPDP Erasure Paradox** | Impossible to delete Kafka logs. | **Cryptographic Shredding.** Destroying the user's KMS DEK shreds the payload mathematically. |
 
 ---
 

@@ -2,9 +2,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use std::cell::UnsafeCell;
 
 const BUFFER_SIZE: usize = 65536;
-const INDEX_MASK: usize = BUFFER_SIZE - 1;
 
-#[repr(C, align(128))] // Upgraded from 64 to 128 for Zen 5 prefetchers
+#[repr(C, align(128))]
 struct CachePaddedSequence {
     value: AtomicUsize,
 }
@@ -12,15 +11,18 @@ struct CachePaddedSequence {
 #[derive(Clone)]
 pub struct TransactionEvent {
     pub sequence_id: u64,
-    pub customer_token: [u8; 32],
-    pub encrypted_payload: [u8; 184], // Zero heap allocation
+    pub customer_id: [u8; 16], // UUID
+    // V3: Envelope Encryption. The payload is encrypted with the user's specific DEK.
+    // To execute a GDPR/DPDP "Right to Erasure", we destroy the DEK in the KMS.
+    // The immutable WAL log remains mathematically intact but the data is shredded forever.
+    pub kms_dek_encrypted_payload: [u8; 184], 
 }
 impl Default for TransactionEvent {
     fn default() -> Self {
         Self {
             sequence_id: 0,
-            customer_token: [0; 32],
-            encrypted_payload: [0; 184]
+            customer_id: [0; 16],
+            kms_dek_encrypted_payload: [0; 184]
         }
     }
 }
