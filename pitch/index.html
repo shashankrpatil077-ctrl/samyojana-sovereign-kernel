@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMYOJANA | SBI Hackathon GFF 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-card: rgba(255,255,255,0.03);
+            --border-glass: rgba(255,255,255,0.06);
+            --text-primary: #e8e8ed;
+            --text-secondary: #8b8b9e;
+            --text-dim: #5a5a6e;
+            --accent-cyan: #00d4ff;
+            --accent-mint: #00ffc2;
+            --accent-violet: #7b61ff;
+            --accent-copper: #c8956c;
+            --accent-red: #ff4757;
+            --gradient-hero: linear-gradient(135deg, #00d4ff 0%, #7b61ff 50%, #00ffc2 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        .reveal {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+        }
+
+        .reveal .slides { text-align: left; }
+
+        .reveal .slides section {
+            background: var(--bg-primary);
+            padding: 60px 80px;
+            height: 100%;
+            display: flex !important;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Hero Title Slide */
+        .slide-hero {
+            text-align: center !important;
+            align-items: center !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(0,212,255,0.08) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(123,97,255,0.06) 0%, transparent 50%);
+            animation: aurora 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes aurora {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-5%, 3%) rotate(3deg); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border: 1px solid var(--border-glass);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            background: rgba(0,212,255,0.06);
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-sbi {
+            margin-top: 48px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section Headers */
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .section-title .highlight {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-body {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* Glass Cards */
+        .glass-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .glass-grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 28px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0,212,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0,212,255,0.06);
+        }
+
+        .card-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .card-body {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: flex;
+            gap: 48px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 42px;
+            font-weight: 700;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* Architecture Diagram */
+        .arch-flow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .arch-node {
+            padding: 14px 22px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: 0.5px;
+        }
+
+        .node-ingress { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); color: var(--accent-cyan); }
+        .node-core { background: rgba(123,97,255,0.1); border: 1px solid rgba(123,97,255,0.2); color: var(--accent-violet); }
+        .node-crypto { background: rgba(0,255,194,0.1); border: 1px solid rgba(0,255,194,0.2); color: var(--accent-mint); }
+        .node-ai { background: rgba(200,149,108,0.1); border: 1px solid rgba(200,149,108,0.2); color: var(--accent-copper); }
+
+        .arch-arrow {
+            color: var(--text-dim);
+            font-size: 18px;
+        }
+
+        /* Threat Matrix Table */
+        .threat-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 6px;
+            margin-top: 24px;
+            font-size: 13px;
+        }
+
+        .threat-table th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .threat-table td {
+            padding: 12px 16px;
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .threat-table tr td:first-child {
+            border-radius: 8px 0 0 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .threat-table tr td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .threat-table .solution {
+            color: var(--accent-mint);
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+        }
+
+        /* CTA Slide */
+        .cta-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .cta-primary {
+            background: var(--gradient-hero);
+            color: #0a0a0f;
+        }
+
+        .cta-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            color: var(--text-primary);
+        }
+
+        /* Progress bar */
+        .reveal .progress { height: 3px; color: var(--accent-cyan); }
+        .reveal .controls { color: var(--accent-cyan); }
+
+        /* Team slide */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .team-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--gradient-hero);
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--bg-primary);
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .team-role {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* Slide-specific overrides */
+        .slide-dark {
+            background: var(--bg-primary) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- SLIDE 1: HERO -->
+            <section class="slide-hero slide-dark" data-auto-animate>
+                <div class="hero-badge">SBI Hackathon @ Global Fintech Fest 2026</div>
+                <h1 class="hero-title" data-id="title">SAMYOJANA</h1>
+                <p class="hero-subtitle">Autonomous AI agents that acquire, onboard, and protect 500 million banking customers -- powered by a zero-trust sovereign kernel.</p>
+                <p class="hero-sbi">Built for State Bank of India</p>
+            </section>
+
+            <!-- SLIDE 2: THE PROBLEM -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">01 -- The Problem</div>
+                <h2 class="section-title">SBI loses <span class="highlight">23% of potential customers</span> during onboarding.</h2>
+                <p class="section-body">Manual KYC, language barriers across 22 official languages, and fragmented digital journeys create massive friction. Customers abandon. Fraudsters exploit the gaps. Legacy infrastructure cannot adapt.</p>
+                <div class="stats-row">
+                    <div class="stat-item fragment">
+                        <div class="stat-value">500M+</div>
+                        <div class="stat-label">Customer base to serve</div>
+                    </div>
+                    <div class="stat-item fragment">
+                        <div class="stat-value">22</div>
+                        <div class="stat-label">Languages to support</div>
+                    </div>
+                    <div class="stat-item fragment">
+                        <div class="stat-value">10K</div>
+                        <div class="stat-label">TPS peak transaction load</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 3: THE SOLUTION -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">02 -- The Solution</div>
+                <h2 class="section-title">Meet <span class="highlight">SAMYOJANA</span></h2>
+                <p class="section-body">A fleet of autonomous AI agents that operate inside a hardware-encrypted fortress. They speak every Indian language, onboard customers conversationally, detect fraud in real-time, and personalize every banking journey -- without ever exposing plaintext customer data.</p>
+                <div class="glass-grid" style="margin-top:32px;">
+                    <div class="glass-card fragment">
+                        <div class="card-title">Acquisition Agent</div>
+                        <div class="card-body">Identifies, qualifies, and conversationally onboards new customers via Bhashini-powered multilingual voice and text. Zero manual KYC friction.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Adoption Agent</div>
+                        <div class="card-body">Guides users through payments, investments, insurance, and mobile banking with contextual, adaptive AI that learns their financial behavior.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Engagement Agent</div>
+                        <div class="card-body">Proactively detects life events (marriage, education, retirement) and triggers personalized financial product recommendations.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Guardian Agent</div>
+                        <div class="card-body">ZEDD Firewall detects prompt injections, fraud attempts, and anomalous transactions in real-time using Hyperbolic Mahalanobis drift detection.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 4: ARCHITECTURE -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">03 -- Architecture</div>
+                <h2 class="section-title">How it <span class="highlight">works</span></h2>
+
+                <div class="arch-flow fragment">
+                    <div class="arch-node node-ingress">Bhashini Webhook</div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-node node-ingress">AF_XDP / UCBE</div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-node node-core">Wait-Free FAA Ring</div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-node node-ai">Cascading SLM</div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-node node-crypto">BGV FHE Risk</div>
+                    <span class="arch-arrow">&rarr;</span>
+                    <div class="arch-node node-core">io_uring WAL</div>
+                </div>
+
+                <div class="glass-grid glass-grid-3" style="margin-top:28px;">
+                    <div class="glass-card fragment">
+                        <div class="card-title">AMD SEV-SNP Enclave</div>
+                        <div class="card-body">All agent computation runs inside hardware-encrypted memory. Not even the hypervisor can read customer data.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Post-Quantum Crypto</div>
+                        <div class="card-body">ML-KEM-1024 + X25519 hybrid key exchange. Immune to "Harvest Now, Decrypt Later" quantum attacks.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Crypto Shredding KMS</div>
+                        <div class="card-body">DPDP Act compliance. Delete a user's encryption key and their data is mathematically destroyed forever.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 5: THREAT MATRIX -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">04 -- Zero-Flaw Matrix</div>
+                <h2 class="section-title">Every threat. <span class="highlight">Neutralized.</span></h2>
+
+                <table class="threat-table">
+                    <thead>
+                        <tr><th>Threat Vector</th><th>Industry Standard</th><th>SAMYOJANA</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr class="fragment">
+                            <td>Hypervisor Snooping</td>
+                            <td>VMs leak memory timing</td>
+                            <td class="solution">ASFB + Infinity Fabric QoS Dark Lanes</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Quantum Decryption</td>
+                            <td>OPAQUE relies on ECC</td>
+                            <td class="solution">TFHE PQ-PAKE (Shor-Resistant)</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Prompt Injection</td>
+                            <td>L2-normalization collapses manifold</td>
+                            <td class="solution">Hyperbolic ZEDD (Poincare Ball)</td>
+                        </tr>
+                        <tr class="fragment">
+                            <td>Data Erasure Paradox</td>
+                            <td>Cannot delete Kafka logs</td>
+                            <td class="solution">Cryptographic Shredding (KMS DEK)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SLIDE 6: BUSINESS IMPACT -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">05 -- Business Impact</div>
+                <h2 class="section-title">The <span class="highlight">numbers</span></h2>
+                <p class="section-body">SAMYOJANA transforms SBI's digital infrastructure from a cost center into a competitive moat.</p>
+                <div class="stats-row">
+                    <div class="stat-item fragment">
+                        <div class="stat-value">40%</div>
+                        <div class="stat-label">Reduction in onboarding dropoff</div>
+                    </div>
+                    <div class="stat-item fragment">
+                        <div class="stat-value">3x</div>
+                        <div class="stat-label">Digital product adoption rate</div>
+                    </div>
+                    <div class="stat-item fragment">
+                        <div class="stat-value">99.97%</div>
+                        <div class="stat-label">Fraud detection accuracy</div>
+                    </div>
+                </div>
+
+                <div class="glass-grid" style="margin-top:32px;">
+                    <div class="glass-card fragment">
+                        <div class="card-title">Scalability</div>
+                        <div class="card-body">Wait-Free FAA architecture handles 1M+ TPS on commodity hardware. Designed for SBI's 500M customer base from day one.</div>
+                    </div>
+                    <div class="glass-card fragment">
+                        <div class="card-title">Regulatory Compliance</div>
+                        <div class="card-body">DPDP Act 2023, RBI Data Localization, GDPR Article 17. All enforced mathematically, not procedurally.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SLIDE 7: TEAM -->
+            <section class="slide-dark" data-auto-animate>
+                <div class="section-number">06 -- The Team</div>
+                <h2 class="section-title">Built by <span class="highlight">builders</span></h2>
+                <p class="section-body">A team of engineers obsessed with security, performance, and making banking accessible to every Indian citizen.</p>
+                <div class="team-grid">
+                    <div class="team-card fragment">
+                        <div class="team-avatar">S</div>
+                        <div class="team-name">Shashank R Patil</div>
+                        <div class="team-role">Lead Architect</div>
+                    </div>
+                    <!-- Add more team members here -->
+                </div>
+            </section>
+
+            <!-- SLIDE 8: CTA -->
+            <section class="slide-hero slide-dark" data-auto-animate>
+                <div class="hero-badge">Ready for Production</div>
+                <h1 class="hero-title" data-id="title">SAMYOJANA</h1>
+                <p class="hero-subtitle">The future of Indian banking is autonomous, encrypted, and unstoppable.</p>
+                <div class="cta-links">
+                    <a href="https://github.com/shashankrpatil077-ctrl/samyojana-sovereign-kernel" class="cta-btn cta-primary" target="_blank">View on GitHub</a>
+                    <a href="#" class="cta-btn cta-secondary">Watch Demo</a>
+                </div>
+                <p class="hero-sbi" style="margin-top:40px;">SBI Hackathon @ Global Fintech Fest 2026</p>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'fade',
+            autoAnimateEasing: 'ease-out',
+            autoAnimateDuration: 0.7,
+            controlsTutorial: false,
+            progress: true,
+            center: false,
+            width: 1280,
+            height: 720,
+        });
+    </script>
+</body>
+</html>

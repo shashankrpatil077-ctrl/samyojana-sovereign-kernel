@@ -1,5 +1,5 @@
 <!-- Animated Header -->
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:1a1b27,100:161b22&height=200&section=header&text=Samyojana%20Sovereign&fontSize=50&fontColor=58a6ff&animation=fadeIn&fontAlignY=35&desc=Hardware-Isolated%20Core%20Banking%20Kernel&descSize=18&descColor=8b949e&descAlignY=55" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:0d1117,50:1a1b27,100:161b22&height=200&section=header&text=Samyojana&fontSize=50&fontColor=58a6ff&animation=fadeIn&fontAlignY=35&desc=Autonomous%20Agentic%20AI%20for%20Indian%20Banking&descSize=18&descColor=8b949e&descAlignY=55" />
 
 <div align="center">
 
@@ -18,7 +18,7 @@
 
 ## Overview
 
-**SAṀYOJANA Sovereign** is a production-grade, zero-trust autonomous multi-agent overlay engineered for State Bank of India's 500M+ customer base. Operating exclusively within hardware-rooted Trusted Execution Environments (TEEs), it serves as a high-throughput abstraction layer above the legacy core, neutralizing catastrophic AI failure states through cryptographic erasure, fully homomorphic risk computation, and lock-free concurrency.
+**SAMYOJANA** is a fleet of autonomous AI agents that acquire, onboard, and protect State Bank of India's 500M+ customers. Unlike passive chatbots that merely respond, SAMYOJANA agents independently plan, reason, and execute end-to-end banking journeys -- from multilingual customer acquisition via Bhashini to real-time fraud detection -- all operating within a zero-trust, hardware-encrypted sovereign kernel.
 
 ---
 
