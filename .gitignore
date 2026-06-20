@@ -1,7 +1,16 @@
 node_modules/
 target/
 __pycache__/
+*.pyc
 .env
 *.pem
 *.key
+*.npy
+*.metadata.json
 .DS_Store
+venv/
+.venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/

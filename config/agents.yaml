@@ -1,0 +1,40 @@
+# SAMYOJANA Agent Configuration
+orchestrator:
+  max_concurrent_sessions: 1000
+  session_timeout_seconds: 1800
+
+acquisition_agent:
+  kyc_timeout_seconds: 300
+  aadhaar_otp_retry_limit: 3
+  supported_languages:
+    - en
+    - hi
+    - kn
+    - ta
+    - te
+    - mr
+    - bn
+    - gu
+    - ml
+    - pa
+    - or
+    - as
+
+engagement_agent:
+  recommendation_model: samyojana-engage-v2
+  life_event_detection: true
+  product_categories:
+    - savings
+    - fixed_deposit
+    - mutual_fund
+    - home_loan
+    - education_loan
+    - insurance
+    - credit_card
+
+guardian_agent:
+  mahalanobis_threshold: 0.82
+  prompt_injection_check: true
+  max_transaction_amount: 1000000
+  pep_screening: true
+  sanctions_list_check: true

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAMYOJANA | SBI Agentic AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#111118;--card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);--text:#e8e8ed;--dim:#5a5a6e;--cyan:#00d4ff;--mint:#00ffc2;--violet:#7b61ff;--red:#ff4757;--grad:linear-gradient(135deg,#00d4ff,#7b61ff,#00ffc2)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;background:var(--bg2)}
+.logo{font-size:22px;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:11px;color:var(--dim);letter-spacing:2px;text-transform:uppercase}
+.status{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mint)}
+.status::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--mint);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.chat-area{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
+.msg{max-width:720px;display:flex;flex-direction:column;gap:6px;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{align-self:flex-end}
+.msg.agent{align-self:flex-start}
+.msg-bubble{padding:16px 20px;border-radius:16px;font-size:14px;line-height:1.7;white-space:pre-wrap}
+.msg.user .msg-bubble{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.15);border-bottom-right-radius:4px}
+.msg.agent .msg-bubble{background:var(--card);border:1px solid var(--border);border-bottom-left-radius:4px}
+.msg-meta{font-size:11px;color:var(--dim);display:flex;align-items:center;gap:8px;padding:0 4px}
+.agent-badge{background:rgba(123,97,255,0.15);color:var(--violet);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.5px}
+.trace-toggle{font-size:11px;color:var(--cyan);cursor:pointer;border:none;background:none;padding:4px 0;text-decoration:underline;font-family:'Inter'}
+.trace-panel{background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);line-height:1.8;display:none;margin-top:4px}
+.trace-panel.open{display:block}
+.trace-line{padding:2px 0}
+.trace-line.plan{color:var(--cyan)}
+.trace-line.execute{color:var(--mint)}
+.trace-line.reason{color:var(--violet)}
+.trace-line.alert{color:var(--red)}
+.input-area{padding:16px 24px;border-top:1px solid var(--border);background:var(--bg2);display:flex;gap:12px;align-items:center}
+#msg-input{flex:1;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 18px;color:var(--text);font-size:14px;font-family:'Inter';outline:none;transition:border-color .2s}
+#msg-input:focus{border-color:rgba(0,212,255,0.3)}
+#msg-input::placeholder{color:var(--dim)}
+#send-btn{background:var(--grad);border:none;border-radius:12px;padding:14px 24px;color:#0a0a0f;font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter';transition:transform .1s,opacity .2s}
+#send-btn:hover{transform:scale(1.03)}
+#send-btn:active{transform:scale(.97)}
+#send-btn:disabled{opacity:.4;cursor:not-allowed}
+.typing{display:flex;gap:4px;padding:8px 16px;align-self:flex-start}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--dim);animation:bounce 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+.msg-bubble strong{color:var(--text)}
+.msg-bubble code{background:rgba(0,212,255,0.08);padding:2px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan)}
+</style>
+</head>
+<body>
+<header>
+<div>
+<div class="logo">SAMYOJANA</div>
+<div class="logo-sub">SBI Agentic AI • GFF 2026</div>
+</div>
+<div class="status">Agents Online</div>
+</header>
+<div class="chat-area" id="chat"></div>
+<div class="input-area">
+<input type="text" id="msg-input" placeholder="Type your message... (try: 'I want to open an account')" autocomplete="off"/>
+<button id="send-btn">Send</button>
+</div>
+<script>
+let sessionId=null;
+const chat=document.getElementById('chat');
+const input=document.getElementById('msg-input');
+const btn=document.getElementById('send-btn');
+
+function addMsg(text,type,agentName,trace){
+ const d=document.createElement('div');d.className='msg '+type;
+ let meta='';
+ if(type==='agent'&&agentName){
+  meta=`<div class="msg-meta"><span class="agent-badge">${agentName}</span><span>${new Date().toLocaleTimeString()}</span></div>`;
+ }else if(type==='user'){
+  meta=`<div class="msg-meta" style="justify-content:flex-end"><span>${new Date().toLocaleTimeString()}</span><span class="agent-badge" style="background:rgba(0,212,255,0.1);color:var(--cyan)">You</span></div>`;
+ }
+ let traceHtml='';
+ if(trace&&trace.length>0){
+  const id='t'+Date.now();
+  let lines=trace.map(l=>{
+   let cls='';
+   if(l.startsWith('PLAN'))cls='plan';
+   else if(l.startsWith('EXECUTE')||l.startsWith('RESULT'))cls='execute';
+   else if(l.startsWith('REASON')||l.startsWith('DECIDE')||l.startsWith('ANALYZE')||l.startsWith('DETECT'))cls='reason';
+   else if(l.startsWith('ALERT')||l.startsWith('WARNING'))cls='alert';
+   return `<div class="trace-line ${cls}">${l}</div>`;
+  }).join('');
+  traceHtml=`<button class="trace-toggle" onclick="document.getElementById('${id}').classList.toggle('open')">🧠 View Agent Reasoning (${trace.length} steps)</button><div class="trace-panel" id="${id}">${lines}</div>`;
+ }
+ const formatted=text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/`(.*?)`/g,'<code>$1</code>');
+ d.innerHTML=meta+`<div class="msg-bubble">${formatted}</div>`+traceHtml;
+ chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+}
+function showTyping(){
+ const d=document.createElement('div');d.className='typing';d.id='typing';
+ d.innerHTML='<span></span><span></span><span></span>';
+ chat.appendChild(d);chat.scrollTop=chat.scrollHeight;
+}
+function hideTyping(){const t=document.getElementById('typing');if(t)t.remove();}
+
+async function send(){
+ const msg=input.value.trim();if(!msg)return;
+ input.value='';btn.disabled=true;
+ addMsg(msg,'user');
+ showTyping();
+ try{
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:msg,session_id:sessionId})});
+  const data=await r.json();
+  hideTyping();
+  sessionId=data.session_id;
+  addMsg(data.message,'agent',data.agent_name,data.reasoning_trace);
+ }catch(e){
+  hideTyping();
+  addMsg('Connection error. Please try again.','agent','System',[]);
+ }
+ btn.disabled=false;input.focus();
+}
+btn.addEventListener('click',send);
+input.addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+addMsg("👋 Welcome to **SAMYOJANA** — SBI's Autonomous AI Banking Assistant.\n\nI can help you with:\n\n🆕 **Open a new account** — Instant eKYC onboarding\n💰 **Explore investments** — Mutual funds, FDs, SIPs\n🏠 **Apply for loans** — Home, education, personal\n🛡️ **Check security** — Transaction screening\n\nWhat would you like to do?",'agent','Orchestrator',['PLAN: New session initialized. Display welcome menu with available agent capabilities.','EXECUTE: All 3 agents (Acquisition, Engagement, Guardian) are online and ready.']);
+input.focus();
+</script>
+</body>
+</html>
