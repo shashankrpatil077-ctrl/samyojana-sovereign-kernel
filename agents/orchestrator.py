@@ -18,7 +18,7 @@ class AgentResponse:
     timestamp: str = ""
 
 
-class AcquisitionAgent:
+class NexusAgent:
     """Autonomous Customer Acquisition Agent.
     Plans, reasons, and executes end-to-end onboarding flows."""
 
@@ -36,7 +36,7 @@ class AcquisitionAgent:
             session["onboarding_step"] = 1
             actions.append("initiated_onboarding_session")
             return AgentResponse(
-                agent_name="Acquisition Agent",
+                agent_name="Nexus Agent",
                 message="Welcome to SBI! I'm your autonomous onboarding assistant. I'll guide you through opening your account in under 5 minutes.\n\nTo get started, please tell me your **full name** as it appears on your Aadhaar card.",
                 actions_taken=actions, reasoning_trace=trace
             )
@@ -49,7 +49,7 @@ class AcquisitionAgent:
             trace.append("REASON: Aadhaar eKYC is mandatory under RBI Master Direction on KYC (2016, amended 2025).")
             actions.append("stored_customer_name")
             return AgentResponse(
-                agent_name="Acquisition Agent",
+                agent_name="Nexus Agent",
                 message=f"Thank you, {session['customer_name']}. Now I need your **12-digit Aadhaar number** for instant eKYC verification.\n\n🔒 Your data is encrypted end-to-end using ML-KEM-1024 post-quantum cryptography.",
                 actions_taken=actions, reasoning_trace=trace
             )
@@ -66,7 +66,7 @@ class AcquisitionAgent:
                 actions.append("aadhaar_validated")
                 actions.append("otp_dispatched_to_aadhaar_mobile")
                 return AgentResponse(
-                    agent_name="Acquisition Agent",
+                    agent_name="Nexus Agent",
                     message=f"✅ Aadhaar {masked} validated.\n\nI've sent a **6-digit OTP** to your Aadhaar-linked mobile number. Please enter it below.\n\n⏱️ OTP expires in 10 minutes.",
                     actions_taken=actions, reasoning_trace=trace
                 )
@@ -74,7 +74,7 @@ class AcquisitionAgent:
                 trace.append(f"VALIDATE: Input '{message}' is not a valid 12-digit Aadhaar number.")
                 trace.append("DECIDE: Ask user to re-enter.")
                 return AgentResponse(
-                    agent_name="Acquisition Agent",
+                    agent_name="Nexus Agent",
                     message="That doesn't look like a valid Aadhaar number. Please enter your **12-digit Aadhaar number** (e.g., 1234 5678 9012).",
                     actions_taken=["validation_failed"], reasoning_trace=trace
                 )
@@ -86,13 +86,13 @@ class AcquisitionAgent:
                 trace.append("EXECUTE: OTP verified against UIDAI gateway.")
                 trace.append("EXECUTE: eKYC data pulled — name, address, DOB, photo.")
                 trace.append("EXECUTE: Running CIBIL credit check in parallel.")
-                trace.append("EXECUTE: Guardian Agent screening for sanctions/PEP lists.")
+                trace.append("EXECUTE: Aegis Agent screening for sanctions/PEP lists.")
                 trace.append("RESULT: All checks passed. Customer eligible for Savings Account.")
                 actions.extend(["otp_verified", "ekyc_completed", "cibil_check_passed", "sanctions_screening_clear"])
                 account_no = f"SBI{uuid.uuid4().hex[:10].upper()}"
                 session["account_number"] = account_no
                 return AgentResponse(
-                    agent_name="Acquisition Agent",
+                    agent_name="Nexus Agent",
                     message=f"🎉 **Congratulations, {session.get('customer_name', 'Customer')}!**\n\nYour account has been created successfully.\n\n"
                            f"📋 **Account Number:** `{account_no}`\n"
                            f"🏦 **Account Type:** Savings Account\n"
@@ -104,21 +104,21 @@ class AcquisitionAgent:
             else:
                 trace.append("VALIDATE: OTP format invalid.")
                 return AgentResponse(
-                    agent_name="Acquisition Agent",
+                    agent_name="Nexus Agent",
                     message="Please enter the 6-digit OTP sent to your mobile.",
                     actions_taken=["otp_validation_failed"], reasoning_trace=trace
                 )
 
         else:
-            trace.append("PLAN: Customer already onboarded. Routing to Engagement Agent.")
+            trace.append("PLAN: Customer already onboarded. Routing to Pulse Agent.")
             return AgentResponse(
-                agent_name="Acquisition Agent",
-                message="Your account is already active! Let me connect you with our Engagement Agent for personalized services.",
-                actions_taken=["handoff_to_engagement"], reasoning_trace=trace
+                agent_name="Nexus Agent",
+                message="Your account is already active! Let me connect you with our Pulse Agent for personalized services.",
+                actions_taken=["handoff_to_pulse"], reasoning_trace=trace
             )
 
 
-class EngagementAgent:
+class PulseAgent:
     """Proactive Customer Engagement Agent.
     Detects life events and recommends personalized financial products."""
 
@@ -145,7 +145,7 @@ class EngagementAgent:
             actions.append("product_recommendation_generated")
             product = self.PRODUCT_CATALOG["mutual_fund"]
             return AgentResponse(
-                agent_name="Engagement Agent",
+                agent_name="Pulse Agent",
                 message=f"Based on your profile, I recommend:\n\n"
                        f"📈 **{product['name']}**\n"
                        f"• Historical Returns: {product['returns']}\n"
@@ -161,7 +161,7 @@ class EngagementAgent:
             actions.append("life_event_detected_home_purchase")
             product = self.PRODUCT_CATALOG["home_loan"]
             return AgentResponse(
-                agent_name="Engagement Agent",
+                agent_name="Pulse Agent",
                 message=f"I detected a potential home purchase! Here's what I can offer:\n\n"
                        f"🏠 **{product['name']}**\n"
                        f"• Interest Rate: {product['rate']}\n"
@@ -176,7 +176,7 @@ class EngagementAgent:
             actions.append("life_event_detected_education")
             product = self.PRODUCT_CATALOG["education_loan"]
             return AgentResponse(
-                agent_name="Engagement Agent",
+                agent_name="Pulse Agent",
                 message=f"Planning for higher education? Here's what I recommend:\n\n"
                        f"🎓 **{product['name']}**\n"
                        f"• Interest Rate: {product['rate']}\n"
@@ -190,7 +190,7 @@ class EngagementAgent:
             trace.append("ANALYZE: General inquiry. Presenting product overview.")
             actions.append("general_engagement")
             return AgentResponse(
-                agent_name="Engagement Agent",
+                agent_name="Pulse Agent",
                 message="Here's what I can help you with:\n\n"
                        "💰 **Investments** — Mutual funds, SIPs, fixed deposits\n"
                        "🏠 **Home Loans** — Pre-approved offers available\n"
@@ -202,7 +202,7 @@ class EngagementAgent:
             )
 
 
-class GuardianAgent:
+class AegisAgent:
     """Security & Fraud Detection Agent.
     Uses Mahalanobis distance for anomaly detection."""
 
@@ -249,9 +249,9 @@ class AgentOrchestrator:
     """Main orchestrator that routes requests to specialized agents."""
 
     def __init__(self):
-        self.acquisition = AcquisitionAgent()
-        self.engagement = EngagementAgent()
-        self.guardian = GuardianAgent()
+        self.nexus = NexusAgent()
+        self.pulse = PulseAgent()
+        self.aegis = AegisAgent()
         self.sessions: dict[str, dict] = {}
 
     def process_request(self, message: str, session_id: Optional[str] = None) -> dict:
@@ -263,11 +263,11 @@ class AgentOrchestrator:
 
         session = self.sessions[session_id]
 
-        security_check = self.guardian.screen_message(message)
+        security_check = self.aegis.screen_message(message)
         if not security_check["safe"]:
             return {
                 "session_id": session_id,
-                "agent_name": "Guardian Agent",
+                "agent_name": "Aegis Agent",
                 "message": "⚠️ This request has been flagged by our security system and cannot be processed.",
                 "actions_taken": ["request_blocked"],
                 "reasoning_trace": security_check["trace"],
@@ -276,9 +276,9 @@ class AgentOrchestrator:
 
         msg_lower = message.lower()
         if any(w in msg_lower for w in ["open account", "new account", "sign up", "register", "onboard", "join"]) or session.get("onboarding_step", 0) > 0:
-            response = self.acquisition.process(message, session)
+            response = self.nexus.process(message, session)
         elif any(w in msg_lower for w in ["invest", "loan", "insurance", "mutual", "sip", "home", "education", "fd", "credit card", "product"]):
-            response = self.engagement.process(message, session)
+            response = self.pulse.process(message, session)
         elif any(w in msg_lower for w in ["help", "hi", "hello", "hey", "start"]):
             response = AgentResponse(
                 agent_name="Orchestrator",
@@ -292,7 +292,7 @@ class AgentOrchestrator:
                 reasoning_trace=["PLAN: New session. Display welcome menu with available agent capabilities."]
             )
         else:
-            response = self.engagement.process(message, session)
+            response = self.pulse.process(message, session)
 
         return {
             "session_id": session_id,

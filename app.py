@@ -20,7 +20,7 @@ class ChatRequest(BaseModel):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok", "version": "5.0.0", "agents": ["acquisition", "engagement", "guardian"]}
+    return {"status": "ok", "version": "5.0.0", "agents": ["nexus", "pulse", "aegis"]}
 
 @app.post("/api/chat")
 async def chat(req: ChatRequest):

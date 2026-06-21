@@ -20,7 +20,7 @@
 
 **SAMYOJANA** is a fleet of autonomous AI agents that acquire, onboard, and protect State Bank of India's 500M+ customers. Unlike passive chatbots that merely respond, SAMYOJANA agents independently **plan, reason, and execute** end-to-end banking journeys — from multilingual customer acquisition via Bhashini to real-time fraud detection — all operating within a zero-trust, hardware-encrypted sovereign kernel.
 
-> **Key Stat:** 60% of Indian digital banking users abandon onboarding before completing KYC ([RBI Digital Payments Report, 2025](https://rbi.org.in)). SAMYOJANA's Acquisition Agent reduces this to under 20% through autonomous, conversational eKYC.
+> **Key Stat:** 60% of Indian digital banking users abandon onboarding before completing KYC ([RBI Digital Payments Report, 2025](https://rbi.org.in)). SAMYOJANA's Nexus Agent reduces this to under 20% through autonomous, conversational eKYC.
 
 ---
 
@@ -28,15 +28,15 @@
 
 <table>
   <tr>
-    <td width="25%" align="center"><strong>🆕 Acquisition Agent</strong></td>
+    <td width="25%" align="center"><strong>🆕 Nexus Agent</strong></td>
     <td>Autonomously onboards customers via conversational Aadhaar eKYC. Plans multi-step verification, collects documents, runs CIBIL checks, and provisions accounts — all without human intervention.</td>
   </tr>
   <tr>
-    <td align="center"><strong>💰 Engagement Agent</strong></td>
+    <td align="center"><strong>💰 Pulse Agent</strong></td>
     <td>Proactively detects life events (home purchase, education, marriage) and recommends personalized financial products. Cross-sells across mutual funds, loans, insurance, and FDs.</td>
   </tr>
   <tr>
-    <td align="center"><strong>🛡️ Guardian Agent</strong></td>
+    <td align="center"><strong>🛡️ Aegis Agent</strong></td>
     <td>Real-time fraud detection using Hyperbolic Mahalanobis drift analysis. Screens every message for prompt injection attacks and every transaction for anomalous patterns.</td>
   </tr>
 </table>
@@ -53,9 +53,9 @@ graph TB
     classDef infra fill:#0A0A0A,stroke:#50E3C2,stroke-width:2px,color:#FFFFFF,rx:6,ry:6
 
     A["User (Bhashini Multilingual)"]:::client -->|Chat| B["Agent Orchestrator"]:::agent
-    B -->|Onboarding| C["Acquisition Agent"]:::agent
-    B -->|Products| D["Engagement Agent"]:::agent
-    B -->|Security| E["Guardian Agent (ZEDD)"]:::agent
+    B -->|Onboarding| C["Nexus Agent"]:::agent
+    B -->|Products| D["Pulse Agent"]:::agent
+    B -->|Security| E["Aegis Agent (ZEDD)"]:::agent
 
     subgraph Secure["AMD SEV-SNP Enclave"]
         C -->|eKYC| F["Aadhaar UIDAI Gateway"]:::crypto
@@ -77,7 +77,7 @@ graph TB
 
 | Threat Vector | Industry Standard | SAMYOJANA |
 |---|---|---|
-| **Prompt Injection** | Basic keyword filters | **Guardian Agent** screens every message against injection patterns with reasoning trace |
+| **Prompt Injection** | Basic keyword filters | **Aegis Agent** screens every message against injection patterns with reasoning trace |
 | **Hypervisor Snooping** | VMs run in plaintext | **AMD SEV-SNP** hardware-encrypted memory enclaves |
 | **Quantum Decryption** | RSA/ECDH TLS | **ML-KEM-1024** hybrid post-quantum key exchange |
 | **Data Erasure Paradox** | Cannot delete Kafka logs | **Cryptographic Shredding** — destroy the KMS DEK, data is mathematically unrecoverable |
