@@ -28,15 +28,15 @@
 
 <table>
   <tr>
-    <td width="25%" align="center"><strong>🆕 Nexus Agent</strong></td>
+    <td width="25%" align="center"><strong>Nexus Agent</strong></td>
     <td>Autonomously onboards customers via conversational Aadhaar eKYC. Plans multi-step verification, collects documents, runs CIBIL checks, and provisions accounts — all without human intervention.</td>
   </tr>
   <tr>
-    <td align="center"><strong>💰 Pulse Agent</strong></td>
+    <td align="center"><strong>Pulse Agent</strong></td>
     <td>Proactively detects life events (home purchase, education, marriage) and recommends personalized financial products. Cross-sells across mutual funds, loans, insurance, and FDs.</td>
   </tr>
   <tr>
-    <td align="center"><strong>🛡️ Aegis Agent</strong></td>
+    <td align="center"><strong>Aegis Agent</strong></td>
     <td>Real-time fraud detection using Hyperbolic Mahalanobis drift analysis. Screens every message for prompt injection attacks and every transaction for anomalous patterns.</td>
   </tr>
 </table>
@@ -69,6 +69,37 @@ graph TB
         K["Kafka Transactional Outbox"]:::infra
         L["KMS Crypto Shredder"]:::infra
     end
+```
+
+---
+
+## Agent Orchestration Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as "Customer (Mobile/Web)"
+    participant Orchestrator as "Agent Orchestrator"
+    participant Aegis as "Aegis Security Agent"
+    participant Nexus as "Nexus Onboarding Agent"
+    participant SEV as "AMD SEV-SNP Enclave"
+
+    User->>Orchestrator: "I want to open a savings account"
+    Orchestrator->>Aegis: Forward payload for security scan
+    Aegis-->>Orchestrator: Clear (No prompt injection detected)
+    Orchestrator->>Nexus: Route to Onboarding Flow
+    
+    rect rgb(10, 10, 10)
+    Note over Nexus,SEV: Hardware-Encrypted eKYC Process
+    end
+    
+    Nexus->>SEV: Execute Aadhaar UIDAI Gateway Check
+    SEV-->>Nexus: eKYC Verified (Biometric Match)
+    Nexus->>SEV: Run CIBIL Credit Check
+    SEV-->>Nexus: Credit Profile Verified
+    
+    Nexus-->>Orchestrator: Account Provisioned Successfully
+    Orchestrator-->>User: "Your account is ready! Here are your details."
 ```
 
 ---
